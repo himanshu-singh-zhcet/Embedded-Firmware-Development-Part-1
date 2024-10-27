@@ -1,0 +1,11 @@
+../bsp/lcd.c:17:6:lcd_send_command	16	static
+../bsp/lcd.c:34:6:lcd_print_char	16	static
+../bsp/lcd.c:47:6:lcd_print_string	16	static
+../bsp/lcd.c:59:6:lcd_init	24	static
+../bsp/lcd.c:130:13:write_4_bits	16	static
+../bsp/lcd.c:139:6:lcd_display_clear	8	static
+../bsp/lcd.c:153:6:lcd_display_return_home	8	static
+../bsp/lcd.c:170:6:lcd_set_cursor	16	static
+../bsp/lcd.c:190:13:lcd_enable	8	static
+../bsp/lcd.c:198:13:mdelay	24	static
+../bsp/lcd.c:203:13:udelay	24	static
