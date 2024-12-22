@@ -1,8 +1,8 @@
 /*
- * lcd.h
- *
+ *  lcd.h
+ *  header file for lcd HD44780U
  *  Created on: 06-Jul-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #ifndef LCD_H_

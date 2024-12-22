@@ -1,9 +1,10 @@
 /*
- * lcd.c
- *
+ *  lcd.c
+ *  c file for lcd HD44780U
  *  Created on: 06-Jul-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
+
 #include<stdint.h>
 #include<string.h>
 
@@ -44,10 +45,10 @@ void lcd_print_char(uint8_t data){
 
 
 void lcd_print_string(char *message){
-      do{
-          lcd_print_char((uint8_t)*message++);
-      }
-      while (*message != '\0');
+  do{
+      lcd_print_char((uint8_t)*message++);
+  }
+  while (*message != '\0');
 
 }
 

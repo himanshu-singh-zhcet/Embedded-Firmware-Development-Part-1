@@ -1,13 +1,12 @@
 /*
- * ds1307.h
- *
+ *  ds1307.h
+ *  header file for rtc ds1307 
  *  Created on: 06-Jul-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #ifndef DS1307_H_
 #define DS1307_H_
-
 
 #include "stm32f401xx.h"
 

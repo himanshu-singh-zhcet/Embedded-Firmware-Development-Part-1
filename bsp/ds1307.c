@@ -1,8 +1,8 @@
 /*
- * ds1307.c
- *
+ *  ds1307.c
+ *  c file for rtc ds1307 
  *  Created on: 06-Jul-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 #include<stdint.h>
 #include<string.h>
@@ -174,8 +174,7 @@ static uint8_t binary_to_bcd(uint8_t value){
 	uint8_t bcd;
 
 	bcd = value;
-	if(value >= 10)
-	{
+	if(value >= 10){
 		m = value /10;
 		n = value % 10;
 		bcd = (m << 4) | n ;
