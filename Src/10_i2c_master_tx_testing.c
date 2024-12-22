@@ -1,33 +1,29 @@
 /*
- * 10_i2c_master_tx_testing.c
- *
+ *  10_i2c_master_tx_testing.c
  *  Created on: 08-Jun-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #include<stdio.h>
 #include<string.h>
+
 #include "stm32f401xx.h"
 
 #define MY_ADDR     0x61;
 #define SLAVE_ADDR  0x68
 
-void delay(void)
-{
+void delay(void){
 	for(uint32_t i = 0 ; i < 500000/2 ; i ++);
 }
 
 //some data
 uint8_t some_data[] = "We are testing I2C master Tx\n";
 
-
-
 I2C_Handle_t I2C1Handle;
 /*
  * PB6-> SCL
  * PB9 or PB7 -> SDA
  */
-
 
 void I2C1_GPIOInits(void){
 	GPIO_Handle_t I2CPins;
@@ -45,18 +41,15 @@ void I2C1_GPIOInits(void){
 	I2CPins.GPIO_PinConfig.GPIO_PinAltFunMode = 4;
 	I2CPins. GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 
-	//scl
+	// scl
 	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
 	GPIO_Init(&I2CPins);
 
 
-	//sda
+	// sda
 	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_9;
 	GPIO_Init(&I2CPins);
 }
-
-
-
 
 void I2C1_Inits(void){
 	I2C1Handle.pI2Cx = I2C1;
@@ -83,7 +76,6 @@ void GPIO_ButtonInit(void){
 }
 
 int main(void){
-
 	GPIO_ButtonInit();
 	//i2c pin inits
 	I2C1_GPIOInits();
@@ -95,18 +87,13 @@ int main(void){
 	I2C_PeripheralControl(I2C1, ENABLE);
 
 	while(1){
-			//wait till button is pressed
-			while( ! GPIO_ReadFromInputPin(GPIOA,GPIO_PIN_NO_0) );
+		//wait till button is pressed
+		while( ! GPIO_ReadFromInputPin(GPIOA,GPIO_PIN_NO_0) );
 
-			//to avoid button de-bouncing related issues 200ms of delay
-			delay();
+		//to avoid button de-bouncing related issues 200ms of delay
+		delay();
 
-			//send some data to the slave
-			I2C_MasterSendData(&I2C1Handle,some_data,strlen((char*)some_data),SLAVE_ADDR,0);
-
+		//send some data to the slave
+		I2C_MasterSendData(&I2C1Handle,some_data,strlen((char*)some_data),SLAVE_ADDR,0);
 	}
-
-
-
-
 }

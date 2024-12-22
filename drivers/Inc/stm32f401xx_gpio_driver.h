@@ -1,14 +1,15 @@
 /*
- * stm32f401xx_gpio_driver.h
- *
+ *  stm32f401xx_gpio_driver.h
+ *  gpio peripheral specific header file
  *  Created on: 11-Feb-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #ifndef INC_STM32F401XX_GPIO_DRIVER_H_
 #define INC_STM32F401XX_GPIO_DRIVER_H_
 
 #include "stm32f401xx.h"
+
 typedef struct{
      uint8_t GPIO_PinNumber;
      uint8_t GPIO_PinMode;    // possible values from @GPIO_PIN_MODES

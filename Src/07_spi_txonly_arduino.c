@@ -1,13 +1,12 @@
 /*
- * 07_spi_txonly_arduino.c
- *
+ *  07_spi_txonly_arduino.c
  *  Created on: 24-May-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
-
 
 #include<string.h>
 #include"stm32f401xx.h"
+
 /*
  *  PB14 --> SPI2_MISO
  *  PB15 --> SPI2_MOSI
@@ -15,6 +14,7 @@
  *  PB12 --> SPI2_NSS
  *  ALT function mode: 5
  */
+
 void SPI2_GPIOInits(){
 	GPIO_Handle_t SPIPins;
 	SPIPins.pGPIOx = GPIOB;
@@ -40,6 +40,7 @@ void SPI2_GPIOInits(){
 	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
 	GPIO_Init(&SPIPins);
 }
+
 void SPI2_SPI_Inits(){
 	SPI_Handle_t SPI2handle;
 	SPI2handle.pSPIx = SPI2;
@@ -68,6 +69,7 @@ void GPIO_ButtonInit(void){
 void delay(void){
 	for(uint32_t i=0;i<500000/2;i++);
 }
+
 int main(void){
 	char user_data[] = "Hello World";
 

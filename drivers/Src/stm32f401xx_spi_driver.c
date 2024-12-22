@@ -1,8 +1,7 @@
 /*
- * stm32f401xx_spi_driver.c
- *
+ *  stm32f401xx_spi_driver.c
  *  Created on: 20-Mar-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #include "stm32f401xx_spi_driver.h"

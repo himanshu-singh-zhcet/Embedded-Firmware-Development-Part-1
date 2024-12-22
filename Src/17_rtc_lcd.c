@@ -1,14 +1,13 @@
 /*
- * 17_rtc_lcd.c
- *
+ *  17_rtc_lcd.c
+ *  Interfacing RTC with LCD Display
  *  Created on: 06-Jul-2024
  *      Author: Himasnhu Singh
  */
 
-
 #include<stdio.h>
-#include "ds1307.h"
 
+#include "ds1307.h"
 #include "lcd.h"
 
 #define SYSTICK_TIM_CLK   16000000UL
@@ -49,13 +48,12 @@ void number_to_string(uint8_t num , char* buf){
 	if(num < 10){
 		buf[0] = '0';
 		buf[1] = num+48;  // putting ascii value
-	}
-	else if(num >= 10 && num < 99){
+
+	}else if(num >= 10 && num < 99){
 		buf[0] = (num/10) + 48;
 		buf[1]= (num % 10) + 48;
 	}
 }
-
 
 //hh:mm:ss
 char* time_to_string(RTC_time_t *rtc_time){
@@ -86,30 +84,27 @@ char* date_to_string(RTC_date_t *rtc_date){
 	return buf;
 }
 
-static void mdelay(uint32_t cnt)
-{
+static void mdelay(uint32_t cnt){
 	for(uint32_t i=0 ; i < (cnt * 1000); i++);
 }
 
-int main(void)
-{
-
+int main(void){
 	RTC_time_t current_time;
 	RTC_date_t current_date;
 
-#ifndef PRINT_LCD
-	printf("RTC test\n");
-#else
-	lcd_init();
+	#ifndef PRINT_LCD
+		printf("RTC test\n");
+	#else
+		lcd_init();
 
-	lcd_print_string("RTC Test...");
+		lcd_print_string("RTC Test...");
 
 
-	mdelay(2000);
+		mdelay(2000);
 
-	lcd_display_clear();
-	lcd_display_return_home();
-#endif
+		lcd_display_clear();
+		lcd_display_return_home();
+	#endif
 
 	if(ds1307_init()){
 		printf("RTC init has failed\n");
@@ -137,27 +132,27 @@ int main(void)
 	char *am_pm;
 	if(current_time.time_format != TIME_FORMAT_24HRS){
 		am_pm = (current_time.time_format) ? "PM" : "AM";
-#ifndef PRINT_LCD
-		printf("Current time = %s %s\n",time_to_string(&current_time),am_pm); // 04:25:41 PM
-#else
-		lcd_print_string(time_to_string(&current_time));
-		lcd_print_string(am_pm);
-#endif
-	}else{
-#ifndef PRINT_LCD
-		printf("Current time = %s\n",time_to_string(&current_time)); // 04:25:41
-#else
-		lcd_print_string(time_to_string(&current_time));
-#endif
+		#ifndef PRINT_LCD
+			printf("Current time = %s %s\n",time_to_string(&current_time),am_pm); // 04:25:41 PM
+		#else
+			lcd_print_string(time_to_string(&current_time));
+			lcd_print_string(am_pm);
+		#endif
+
+	}else {
+		#ifndef PRINT_LCD
+			printf("Current time = %s\n",time_to_string(&current_time)); // 04:25:41
+		#else
+			lcd_print_string(time_to_string(&current_time));
+		#endif
 	}
 
-#ifndef PRINT_LCD
-	printf("Current date = %s <%s>\n",date_to_string(&current_date), get_day_of_week(current_date.day));
-#else
-	lcd_set_cursor(2, 1);
-	lcd_print_string(date_to_string(&current_date));
-#endif
-
+	#ifndef PRINT_LCD
+		printf("Current date = %s <%s>\n",date_to_string(&current_date), get_day_of_week(current_date.day));
+	#else
+		lcd_set_cursor(2, 1);
+		lcd_print_string(date_to_string(&current_date));
+	#endif
 
 	while(1);
 
@@ -165,8 +160,8 @@ int main(void)
 }
 
 
-void SysTick_Handler(void)
-{
+void SysTick_Handler(void){
+
 	RTC_time_t current_time;
 	RTC_date_t current_date;
 
@@ -175,34 +170,32 @@ void SysTick_Handler(void)
 	char *am_pm;
 	if(current_time.time_format != TIME_FORMAT_24HRS){
 		am_pm = (current_time.time_format) ? "PM" : "AM";
-#ifndef PRINT_LCD
-		printf("Current time = %s %s\n",time_to_string(&current_time),am_pm); // 04:25:41 PM
-#else
-		lcd_set_cursor(1, 1);
-		lcd_print_string(time_to_string(&current_time));
-		lcd_print_string(am_pm);
-#endif
+		#ifndef PRINT_LCD
+				printf("Current time = %s %s\n",time_to_string(&current_time),am_pm); // 04:25:41 PM
+		#else
+				lcd_set_cursor(1, 1);
+				lcd_print_string(time_to_string(&current_time));
+				lcd_print_string(am_pm);
+		#endif
 
-	}else{
-#ifndef PRINT_LCD
-		printf("Current time = %s\n",time_to_string(&current_time)); // 04:25:41
-#else
-		lcd_set_cursor(1, 1);
-		lcd_print_string(time_to_string(&current_time));
-#endif
+	}else {
+		#ifndef PRINT_LCD
+			printf("Current time = %s\n",time_to_string(&current_time)); // 04:25:41
+		#else
+			lcd_set_cursor(1, 1);
+			lcd_print_string(time_to_string(&current_time));
+		#endif
 	}
 
 	ds1307_get_current_date(&current_date);
 
-#ifndef PRINT_LCD
-	printf("Current date = %s <%s>\n",date_to_string(&current_date), get_day_of_week(current_date.day));
-#else
-	lcd_set_cursor(2, 1);
-	lcd_print_string(date_to_string(&current_date));
-	lcd_print_char('<');
-	lcd_print_string(get_day_of_week(current_date.day));
-	lcd_print_char('>');
-#endif
-
-
+	#ifndef PRINT_LCD
+		printf("Current date = %s <%s>\n",date_to_string(&current_date), get_day_of_week(current_date.day));
+	#else
+		lcd_set_cursor(2, 1);
+		lcd_print_string(date_to_string(&current_date));
+		lcd_print_char('<');
+		lcd_print_string(get_day_of_week(current_date.day));
+		lcd_print_char('>');
+	#endif
 }

@@ -1,8 +1,8 @@
 /*
- * stm32f401xx_usart_driver.h
- *
+ *  stm32f401xx_usart_driver.h
+ *  usart peripheral specific header file
  *  Created on: 24-Jun-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #ifndef INC_STM32F401XX_USART_DRIVER_H_

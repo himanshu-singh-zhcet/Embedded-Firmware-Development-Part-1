@@ -1,33 +1,29 @@
 /*
- * 10_i2c_master_tx_testing.c
- *
+ *  10_i2c_master_tx_testing.c
  *  Created on: 08-Jun-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #include<stdio.h>
 #include<string.h>
+
 #include "stm32f401xx.h"
 
 #define MY_ADDR     0x61;
 #define SLAVE_ADDR  0x68
 
-void delay(void)
-{
+void delay(void){
 	for(uint32_t i = 0 ; i < 500000/2 ; i ++);
 }
 
 //some data
 uint8_t rcv_buf[32];
 
-
-
 I2C_Handle_t I2C1Handle;
 /*
  * PB6-> SCL
  * PB9 or PB7 -> SDA
  */
-
 
 void I2C1_GPIOInits(void){
 	GPIO_Handle_t I2CPins;
@@ -56,8 +52,6 @@ void I2C1_GPIOInits(void){
 }
 
 
-
-
 void I2C1_Inits(void){
 	I2C1Handle.pI2Cx = I2C1;
 	I2C1Handle.I2C_Config.I2C_AckControl = I2C_ACK_ENABLE;
@@ -66,7 +60,6 @@ void I2C1_Inits(void){
 	I2C1Handle.I2C_Config.I2C_SCLSpeed = I2C_SCL_SPEED_SM;
 
 	I2C_Init(&I2C1Handle);
-
 }
 
 void GPIO_ButtonInit(void){
@@ -100,26 +93,22 @@ int main(void){
 	I2C_ManageAcking(I2C1,I2C_ACK_ENABLE);
 
 	while(1){
-			//wait till button is pressed
-			while( ! GPIO_ReadFromInputPin(GPIOA,GPIO_PIN_NO_0) );
+		//wait till button is pressed
+		while( ! GPIO_ReadFromInputPin(GPIOA,GPIO_PIN_NO_0) );
 
-			//to avoid button de-bouncing related issues 200ms of delay
-			delay();
+		//to avoid button de-bouncing related issues 200ms of delay
+		delay();
 
-			commandcode = 0x51;
-			I2C_MasterSendData(&I2C1Handle,&commandcode,1,SLAVE_ADDR,I2C_ENABLE_SR);
+		commandcode = 0x51;
+		I2C_MasterSendData(&I2C1Handle,&commandcode,1,SLAVE_ADDR,I2C_ENABLE_SR);
 
-			I2C_MasterReceiveData(&I2C1Handle,&len,1,SLAVE_ADDR,I2C_ENABLE_SR);
+		I2C_MasterReceiveData(&I2C1Handle,&len,1,SLAVE_ADDR,I2C_ENABLE_SR);
 
-			commandcode = 0x52;
-			I2C_MasterSendData(&I2C1Handle,&commandcode,1,SLAVE_ADDR,I2C_ENABLE_SR);
+		commandcode = 0x52;
+		I2C_MasterSendData(&I2C1Handle,&commandcode,1,SLAVE_ADDR,I2C_ENABLE_SR);
 
-			I2C_MasterReceiveData(&I2C1Handle,&rcv_buf,len,SLAVE_ADDR,I2C_DISABLE_SR);
+		I2C_MasterReceiveData(&I2C1Handle,&rcv_buf,len,SLAVE_ADDR,I2C_DISABLE_SR);
 
-			rcv_buf[len+1] = '\0';
+		rcv_buf[len+1] = '\0';
 	}
-
-
-
-
 }

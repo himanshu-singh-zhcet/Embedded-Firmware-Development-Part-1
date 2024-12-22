@@ -1,15 +1,11 @@
 /*
- * 08_spi_cmd_handling.c
- *
+ *  08_spi_cmd_handling.c
  *  Created on: 31-May-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #include<string.h>
 #include"stm32f401xx.h"
-
-
-
 
 // command codes
 #define COMMAND_LED_CTRL         0x50
@@ -38,6 +34,7 @@
  *  PB12 --> SPI2_NSS
  *  ALT function mode: 5
  */
+
 void SPI2_GPIOInits() {
 	GPIO_Handle_t SPIPins;
 	SPIPins.pGPIOx = GPIOB;
@@ -90,8 +87,7 @@ void GPIO_ButtonInit(void) {
 }
 
 void delay(void) {
-	for (uint32_t i = 0; i < 500000 / 2; i++)
-		;
+	for (uint32_t i = 0; i < 500000 / 2; i++);
 }
 
 uint8_t SPI_VerifyResponse(uint8_t ackbyte) {

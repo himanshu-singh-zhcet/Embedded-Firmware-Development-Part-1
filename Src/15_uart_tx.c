@@ -1,15 +1,12 @@
 /*
- * 15_uart_tx.c
- *
+ *  15_uart_tx.c
  *  Created on: 06-Jul-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
-
-
-
 
 #include<stdio.h>
 #include<string.h>
+
 #include "stm32f401xx.h"
 
 char msg[1024] = "UART Tx testing...\n\r";
@@ -27,8 +24,7 @@ void USART2_Init(void){
 	USART_Init(&usart2_handle);
 }
 
-void 	USART2_GPIOInit(void)
-{
+void 	USART2_GPIOInit(void){
 	GPIO_Handle_t usart_gpios;
 
 	usart_gpios.pGPIOx = GPIOA;
@@ -46,11 +42,9 @@ void 	USART2_GPIOInit(void)
 	usart_gpios.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_3;
 	GPIO_Init(&usart_gpios);
 
-
 }
 
-void GPIO_ButtonInit(void)
-{
+void GPIO_ButtonInit(void){
 	GPIO_Handle_t GPIOBtn,GpioLed;
 
 	//this is btn gpio configuration
@@ -71,19 +65,15 @@ void GPIO_ButtonInit(void)
 	GpioLed.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
 
 	GPIO_PeriClockControl(GPIOD,ENABLE);
-
 	GPIO_Init(&GpioLed);
-
 }
 
-void delay(void)
-{
+void delay(void){
 	for(uint32_t i = 0 ; i < 500000/2 ; i ++);
 }
 
 
-int main(void)
-{
+int main(void){
 
 	GPIO_ButtonInit();
 
@@ -93,8 +83,7 @@ int main(void)
 
     USART_PeripheralControl(USART2,ENABLE);
 
-    while(1)
-    {
+    while(1){
 		//wait till button is pressed
 		while( ! GPIO_ReadFromInputPin(GPIOA,GPIO_PIN_NO_0) );
 

@@ -1,8 +1,8 @@
 /*
- * stm32f401xx.h
- *  Device specific header file
+ *  stm32f401xx.h
+ *  Device(or MCU) specific header file
  *  Created on: Feb 7, 2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #ifndef INC_STM32F401XX_H_
@@ -10,6 +10,7 @@
 
 #include<stddef.h>
 #include<stdint.h>
+#include<stdio.h>
 
 #define __vo volatile
 #define __weak __attribute__((weak))

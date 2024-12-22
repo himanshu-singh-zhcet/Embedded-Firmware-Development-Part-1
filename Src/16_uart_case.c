@@ -1,16 +1,13 @@
 /*
- * 16_uart_case.c
- *
+ *  16_uart_case.c
  *  Created on: 06-Jul-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
-
 
 #include<stdio.h>
 #include<string.h>
+
 #include "stm32f401xx.h"
-
-
 
 //we have 3 different messages that we transmit to arduino
 //you can by all means add more messages
@@ -20,7 +17,6 @@ char *msg[3] = {"hihihihihihi123", "Hello How are you ?" , "Today is Monday !"};
 char rx_buf[1024] ;
 
 USART_Handle_t usart2_handle;
-
 
 //This flag indicates reception completion
 uint8_t rxCmplt = RESET;
@@ -80,30 +76,29 @@ void GPIO_ButtonInit(void){
 
 	GPIO_PeriClockControl(GPIOD,ENABLE);
 
-	GPIO_Init(&GpioLed);
+   GPIO_Init(&GpioLed);
 
 }
 
 void delay(void){
 	for(uint32_t i = 0 ; i < 500000/2 ; i ++);
 }
+
 int main(void){
 	uint32_t cnt = 0;
-
-
 	initialise_monitor_handles();
 
 	USART2_GPIOInit();
-    USART2_Init();
+   USART2_Init();
 
-    USART_IRQInterruptConfig(IRQ_NO_USART2,ENABLE);
+   USART_IRQInterruptConfig(IRQ_NO_USART2,ENABLE);
 
-    USART_PeripheralControl(USART2,ENABLE);
+   USART_PeripheralControl(USART2,ENABLE);
 
-    printf("Application is running\n");
+   printf("Application is running\n");
 
-    //do forever
-    while(1){
+   //do forever
+   while(1){
 		//wait till button is pressed
 		while( ! GPIO_ReadFromInputPin(GPIOA,GPIO_PIN_NO_0) );
 
@@ -138,8 +133,7 @@ int main(void){
 
     	//move on to next message indexed in msg[]
     	cnt ++;
-    }
-
+   }
 
 	return 0;
 }
@@ -149,18 +143,10 @@ void USART2_IRQHandler(void){
 	USART_IRQHandling(&usart2_handle);
 }
 
-
-
-
-
-void USART_ApplicationEventCallback( USART_Handle_t *pUSARTHandle,uint8_t ApEv)
-{
-   if(ApEv == USART_EVENT_RX_CMPLT)
-   {
-			rxCmplt = SET;
-
-   }else if (ApEv == USART_EVENT_TX_CMPLT)
-   {
+void USART_ApplicationEventCallback( USART_Handle_t *pUSARTHandle,uint8_t ApEv){
+   if(ApEv == USART_EVENT_RX_CMPLT){
+		rxCmplt = SET;
+   }else if (ApEv == USART_EVENT_TX_CMPLT){
 	   ;
    }
 }

@@ -1,8 +1,7 @@
 /*
- * stm32f401xx_i2c_driver.c
- *
+ *  stm32f401xx_i2c_driver.c
  *  Created on: 03-Jun-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #include "stm32f401xx_i2c_driver.h"

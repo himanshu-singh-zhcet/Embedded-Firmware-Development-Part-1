@@ -1,12 +1,13 @@
 /*
- * stm32f401xx_spi_driver.h
+ *  stm32f401xx_spi_driver.h
  *  spi peripheral specific header file
  *  Created on: 20-Mar-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #ifndef INC_STM32F401XX_SPI_DRIVER_H_
 #define INC_STM32F401XX_SPI_DRIVER_H_
+
 #include "stm32f401xx.h"   // INCLUDING DEVICE SPECIFIC HEADER FILE
 
 /*

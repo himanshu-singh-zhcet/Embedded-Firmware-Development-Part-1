@@ -1,37 +1,28 @@
 /*
- * 13_i2c_slave_tx_string.c
- *
+ *  13_i2c_slave_tx_string.c
  *  Created on: 23-Jun-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
-
 
 #include<stdio.h>
 #include<string.h>
-#include "stm32f401xx.h"
 
+#include "stm32f401xx.h"
 
 #define MY_ADDR 0x68
 
-
-
-void delay(void)
-{
+void delay(void){
 	for(uint32_t i = 0 ; i < 500000/2 ; i++);
 }
 
 //some data
 uint8_t Tx_buf[32]= "stm32 slave mode testing";
 
-
-
-
 I2C_Handle_t I2C1Handle;
 /*
  * PB6-> SCL
  * PB9 or PB7 -> SDA
  */
-
 
 void I2C1_GPIOInits(void){
 	GPIO_Handle_t I2CPins;
@@ -52,7 +43,6 @@ void I2C1_GPIOInits(void){
 	//scl
 	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
 	GPIO_Init(&I2CPins);
-
 
 	//sda
 	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_9;
@@ -87,8 +77,6 @@ void GPIO_ButtonInit(void){
 }
 
 int main(void){
-
-
 	GPIO_ButtonInit();
 	//i2c pin inits
 	I2C1_GPIOInits();
@@ -108,9 +96,6 @@ int main(void){
 	// ACK bit is made 1 after PE =1
 	I2C_ManageAcking(I2C1,I2C_ACK_ENABLE);
 	while(1);
-
-
-
 }
 
 void I2C1_EV_IRQHandler (void){
@@ -125,34 +110,33 @@ void I2C1_ER_IRQHandler (void){
 
 void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle,uint8_t AppEv){
 
-	 static uint8_t commandCode =0;
-	 static uint8_t Cnt =0;
-     if(AppEv == I2C_EV_DATA_REQ){
-    	 // Master Wants Some Data, slave has to send it
-    	 if(commandCode == 0x51){
-    		 // send the length information to the master
-    		 I2C_SlaveSendData(pI2CHandle->pI2Cx,strlen((char*)Tx_buf));
-    	 }
-    	 else if(commandCode == 0x52){
+	static uint8_t commandCode =0;
+	static uint8_t Cnt =0;
+    if(AppEv == I2C_EV_DATA_REQ){
+        // Master Wants Some Data, slave has to send it
+    	if(commandCode == 0x51){
+    	    // send the length information to the master
+    		I2C_SlaveSendData(pI2CHandle->pI2Cx,strlen((char*)Tx_buf));
+    	}
+    	else if(commandCode == 0x52){
     		 // send the contents of Tx_buf
     		 I2C_SlaveSendData(pI2CHandle->pI2Cx,Tx_buf[Cnt++]);
-    	 }
-     }
-     else if (AppEv == I2C_EV_DATA_RCV){
-    	 // data is waiting for slave to read. slave has to read it
-    	 commandCode = I2C_SlaveReceiveData(pI2CHandle->pI2Cx);
-     }
-     else if (AppEv == I2C_ERROR_AF){
-    	 // this happens only during slave Txing
-    	 // master has sent NACK. so slave should understand that master does not need more data
+    	}
 
-    	 commandCode = 0xff;
-    	 Cnt = 0;
-     }
-     else if (AppEv == I2C_EV_STOP){
+    } else if (AppEv == I2C_EV_DATA_RCV){
+    	// data is waiting for slave to read. slave has to read it
+    	commandCode = I2C_SlaveReceiveData(pI2CHandle->pI2Cx);
+
+    } else if (AppEv == I2C_ERROR_AF){
+    	// this happens only during slave Txing
+    	// master has sent NACK. so slave should understand that master does not need more data
+    	commandCode = 0xff;
+    	Cnt = 0;
+
+    } else if (AppEv == I2C_EV_STOP){
     	 // THIS happens during slave reception
          // master has ended the i2c communication with slave.
-     }
+    }
 }
 
 

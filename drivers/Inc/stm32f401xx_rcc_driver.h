@@ -1,8 +1,8 @@
 /*
- * stm32f401xx_rcc_driver.h
- *
+ *  stm32f401xx_rcc_driver.h
+ *  rcc peripheral specific header file
  *  Created on: 06-Jul-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #ifndef INC_STM32F401XX_RCC_DRIVER_H_

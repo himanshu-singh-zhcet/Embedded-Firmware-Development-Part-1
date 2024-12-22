@@ -1,8 +1,8 @@
 /*
- * stm32f401xx_i2c_driver.h
- *
+ *  stm32f401xx_i2c_driver.h
+ *  i2c peripheral specific header file
  *  Created on: 03-Jun-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #ifndef INC_STM32F401XX_I2C_DRIVER_H_

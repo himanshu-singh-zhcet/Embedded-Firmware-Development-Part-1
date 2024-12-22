@@ -1,8 +1,7 @@
  /*
- * stm32f401xx_usart_driver.c
- *
+ *  stm32f401xx_usart_driver.c
  *  Created on: 24-Jun-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #include "stm32f401xx_usart_driver.h"

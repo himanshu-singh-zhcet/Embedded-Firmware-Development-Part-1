@@ -1,8 +1,7 @@
 /*
- * 09_spi_message_rcv_it.c
- *
+ *  09_spi_message_rcv_it.c
  *  Created on: 02-Jun-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 /*
@@ -10,6 +9,7 @@
  * User sends the message through Arduino IDE's serial monitor tool
  * Monitor the message received in the SWV itm data console
  */
+
 /*
  * Note : Follow the instructions to test this code
  * 1. Download this code on to STM32 board , acts as Master
@@ -19,10 +19,11 @@
  * 5. Open Arduino IDE serial monitor tool
  * 6. Type anything and send the message (Make sure that in the serial monitor tool line ending set to carriage return)
  */
+
 #include<stdio.h>
 #include<string.h>
-#include "stm32f401xx.h"
 
+#include "stm32f401xx.h"
 
 SPI_Handle_t SPI2handle;
 
@@ -38,8 +39,7 @@ volatile uint8_t rcvStop = 0;
 /*This flag will be set in the interrupt handler of the Arduino interrupt GPIO */
 volatile uint8_t dataAvailable = 0;
 
-void delay(void)
-{
+void delay(void){
 	for(uint32_t i = 0 ; i < 500000/2 ; i ++);
 }
 
@@ -51,8 +51,7 @@ void delay(void)
  * ALT function mode : 5
  */
 
-void SPI2_GPIOInits(void)
-{
+void SPI2_GPIOInits(void){
 	GPIO_Handle_t SPIPins;
 
 	SPIPins.pGPIOx = GPIOB;
@@ -82,8 +81,7 @@ void SPI2_GPIOInits(void)
 
 }
 
-void SPI2_Inits(void)
-{
+void SPI2_Inits(void){
 	SPI2handle.pSPIx = SPI2;
 	SPI2handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
 	SPI2handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
@@ -98,8 +96,7 @@ void SPI2_Inits(void)
 
 
 /*This function configures the gpio pin over which SPI peripheral issues data available interrupt */
-void Slave_GPIO_InterruptPinInit(void)
-{
+void Slave_GPIO_InterruptPinInit(void){
 	GPIO_Handle_t spiIntPin;
 	memset(&spiIntPin,0,sizeof(spiIntPin));
 
@@ -114,12 +111,10 @@ void Slave_GPIO_InterruptPinInit(void)
 
 	GPIO_IRQPriorityConfig(IRQ_NO_EXTI9_5,NVIC_IRQ_PRI15);
 	GPIO_IRQInterruptConfig(IRQ_NO_EXTI9_5,ENABLE);
-
 }
 
 
-int main(void)
-{
+int main(void){
 
 	uint8_t dummy = 0xff;
 
@@ -153,8 +148,7 @@ int main(void)
 		SPI_PeripheralControl(SPI2,ENABLE);
 
 
-		while(!rcvStop)
-		{
+		while(!rcvStop){
 			/* fetch the data from the SPI peripheral byte by byte in interrupt mode */
 			while ( SPI_SendDataIT(&SPI2handle,&dummy,1) == SPI_BUSY_IN_TX);
 			while ( SPI_ReceiveDataIT(&SPI2handle,&ReadByte,1) == SPI_BUSY_IN_RX );
@@ -172,8 +166,6 @@ int main(void)
 		dataAvailable = 0;
 
 		GPIO_IRQInterruptConfig(IRQ_NO_EXTI9_5,ENABLE);
-
-
 	}
 
 	return 0;
@@ -181,33 +173,27 @@ int main(void)
 }
 
 /* Runs when a data byte is received from the peripheral over SPI*/
-void SPI2_IRQHandler(void)
-{
-
+void SPI2_IRQHandler(void){
 	SPI_IRQHandling(&SPI2handle);
 }
 
 
 
-void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle,uint8_t AppEv)
-{
+void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle,uint8_t AppEv){
 	static uint32_t i = 0;
 	/* In the RX complete event , copy data in to rcv buffer . '\0' indicates end of message(rcvStop = 1) */
-	if(AppEv == SPI_EVENT_RX_CMPLT)
-	{
-				RcvBuff[i++] = ReadByte;
-				if(ReadByte == '\0' || ( i == MAX_LEN)){
-					rcvStop = 1;
-					RcvBuff[i-1] = '\0';
-					i = 0;
-				}
+	if(AppEv == SPI_EVENT_RX_CMPLT){
+		RcvBuff[i++] = ReadByte;
+		if(ReadByte == '\0' || ( i == MAX_LEN)){
+			rcvStop = 1;
+			RcvBuff[i-1] = '\0';
+			i = 0;
+		}
 	}
-
 }
 
 /* Slave data available interrupt handler */
-void EXTI9_5_IRQHandler(void)
-{
+void EXTI9_5_IRQHandler(void){
 	GPIO_IRQHandling(GPIO_PIN_NO_6);
 	dataAvailable = 1;
 }

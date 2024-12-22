@@ -1,11 +1,13 @@
 /*
- * 06_SPI_Tx_testing.c
- *
+ *  06_SPI_Tx_testing.c
  *  Created on: 23-May-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
+
 #include<string.h>
 #include"stm32f401xx.h"
+
+
 /*
  *  PB14 --> SPI2_MISO
  *  PB15 --> SPI2_MOSI
@@ -13,6 +15,7 @@
  *  PB12 --> SPI2_NSS
  *  ALT function mode: 5
  */
+
 void SPI2_GPIOInits(){
 	GPIO_Handle_t SPIPins;
 	SPIPins.pGPIOx = GPIOB;

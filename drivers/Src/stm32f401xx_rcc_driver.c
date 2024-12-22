@@ -1,8 +1,7 @@
 /*
- * stm32f401xx_rcc_driver.c
- *
+ *  stm32f401xx_rcc_driver.c
  *  Created on: 06-Jul-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 #include "stm32f401xx_rcc_driver.h"

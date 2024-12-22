@@ -1,9 +1,9 @@
 /*
- * stm32f401xx_gpio_driver.c
- *
+ *  stm32f401xx_gpio_driver.c
  *  Created on: 11-Feb-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
+
 #include "stm32f401xx_gpio_driver.h"
 // Peripheral clock setup
 /*

@@ -1,12 +1,14 @@
 /*
- * 05_button_interrupt.c
- *
+ *  05_button_interrupt.c
  *  Created on: 14-Mar-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
+
 #include<string.h>
+
 #include "stm32f401xx.h"
 #include "stm32f401xx_gpio_driver.h"
+
 #define HIGH 1
 #define LOW 0
 #define BUTTON_PRESSED LOW
@@ -15,6 +17,7 @@ void delay(void){
 	// this will introduce 200ms delay when system clock is 16MHz
 	for(uint32_t i=0;i<500000/2;i++);
 }
+
 int main(void){
 		GPIO_Handle_t GpioLed,Gpiobtn;
 		memset(&GpioLed,0,sizeof(GpioLed));
@@ -44,6 +47,7 @@ int main(void){
         while(1);
 	return 0;
 }
+
 void EXTI9_5_IRQHandler(void){
 	delay(); // 200ms
 	GPIO_IRQHandling(GPIO_PIN_NO_5); //clear the pending event from exti line

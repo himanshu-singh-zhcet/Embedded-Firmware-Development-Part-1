@@ -1,8 +1,7 @@
 /*
- * 00 main.c
- *
+ *  00 main.c
  *  Created on: 14-Mar-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 #include "stm32f401xx.h"
 #include "stm32f401xx_gpio_driver.h"

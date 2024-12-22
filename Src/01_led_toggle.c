@@ -1,14 +1,16 @@
 /*
- * 01_led_toggle.c
- *
+ *  01_led_toggle.c
  *  Created on: 08-Mar-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
+
 #include "stm32f401xx.h"
 #include "stm32f401xx_gpio_driver.h"
+
 void delay(void){
 	for(uint32_t i=0;i<500000;i++);
 }
+
 int main(void){
 	GPIO_Handle_t GpioLed;
 	GpioLed.pGPIOx = GPIOA;

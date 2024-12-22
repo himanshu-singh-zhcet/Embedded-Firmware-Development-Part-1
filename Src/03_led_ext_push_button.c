@@ -1,19 +1,21 @@
 /*
- * 03_led_ext_push_button.c
- *
+ *  03_led_ext_push_button.c
  *  Created on: 08-Mar-2024
- *      Author: Himanshu Singh
+ *  Author: Himanshu Singh
  */
 
 
 #include "stm32f401xx.h"
 #include "stm32f401xx_gpio_driver.h"
+
 #define HIGH 1
 #define LOW 0
 #define BUTTON_PRESSED LOW
+
 void delay(void){
 	for(uint32_t i=0;i<500000/2;i++);
 }
+
 int main(void){
 	GPIO_Handle_t GpioLed,Gpiobtn;
 	// this us led gpio configuration
@@ -39,8 +41,6 @@ int main(void){
 			delay();
 			GPIO_ToggleOutputPin(GPIOA, GPIO_PIN_NO_5);
 		}
-
-
 	}
 	return 0;
 }
